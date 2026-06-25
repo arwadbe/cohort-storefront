@@ -109,7 +109,7 @@ export default async function decorate(block) {
 
     try {
         const items = await fetchCategoryProducts(filter, maxProducts);
-        console.log('tacos',items)
+
         if (items.length === 0) {
             productsContainer.innerHTML = '<p class="promo-banner__status">No products found.</p>';
             return;
