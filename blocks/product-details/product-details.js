@@ -106,6 +106,7 @@ export default async function decorate(block) {
         <div class="product-details__header"></div>
         <div class="product-details__tagline pdp-tagline" aria-label="Promotional offer"></div>
         <div class="product-details__stock" role="status" aria-live="polite"></div>
+        <div class="product-details__badge-strip" role="status" aria-live="polite"></div>
         <div class="product-details__price"></div>
         <div class="product-details__gallery"></div>
         <div class="product-details__short-description"></div>
@@ -138,25 +139,38 @@ export default async function decorate(block) {
   const $wishlistToggleBtn = fragment.querySelector('.product-details__buttons__add-to-wishlist');
   const $description = fragment.querySelector('.product-details__description');
   const $attributes = fragment.querySelector('.product-details__attributes');
-  
+
   // cohort week2
   const $tagline = fragment.querySelector('.product-details__tagline');
   const $stock = fragment.querySelector('.product-details__stock');
   const $customAttribute = fragment.querySelector('.product-details__custom-attribute');
-
+  const $badgeStrip = fragment.querySelector('.product-details__badge-strip');
 
   block.replaceChildren(fragment);
-  
+
+  // capstone
+  if ($badgeStrip) {
+    $badgeStrip.innerHTML = '<span class="badge badge--placeholder">Loading badges...</span>';
+  }
+  events.on('pdp/data', (product) => {
+    console.log(123123)
+    if (!product || !$badgeStrip) return;   // Replace with live badge logic in Week 3   
+    const colors = ['green', 'blue', 'red', 'purple', 'orange'];
+    $badgeStrip.innerHTML = (product.badgeRules ?? [])
+      .map((label, i) => `<span class="badge badge--${colors[i % colors.length]}">${label}</span>`)
+      .join('');
+  }, { eager: true });
+
   // cohort week2
   $tagline.textContent = $tagline ? 'Free shipping on orders over $50' : '';
   events.on('pdp/data', (product) => {
     if (!product) return;
     if (product.inStock) {
-    $stock.textContent = '● In Stock';
-    $stock.className = 'product-details__stock stock-badge stock-badge--in-stock';
+      $stock.textContent = '● In Stock';
+      $stock.className = 'product-details__stock stock-badge stock-badge--in-stock';
     } else {
-    $stock.textContent = '● Out of Stock';
-    $stock.className = 'product-details__stock stock-badge stock-badge--out-of-stock';
+      $stock.textContent = '● Out of Stock';
+      $stock.className = 'product-details__stock stock-badge stock-badge--out-of-stock';
     }
   }, { eager: true });
 

@@ -102,6 +102,9 @@ await initializeDropin(async () => {
   const models = {
     ProductDetails: {
       initialData: { ...product },
+      transformer: (rawProduct) => ({
+        badgeRules: rawProduct.attributes?.find((a) => a.name === 'badge_rules')?.value ?? null,
+      }),
     },
   };
 

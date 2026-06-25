@@ -146,3 +146,48 @@
   margin-left: 0;
   color: #444;
 }
+
+.product-details__badge-strip {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.badge--placeholder {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.badge--red {
+  background: #fde8e8;
+  color: #c0392b;
+}
+
+.badge--blue {
+  background: #e8f0fe;
+  color: #1a56db;
+}
+
+.badge--green {
+  background: #e8f5e9;
+  color: #1e7e34;
+}
+
+.badge--purple {
+  background: #f3e8fd;
+  color: #7c3aed;
+}
+
+.badge--orange {
+  background: #fef3e8;
+  color: #c05621;
+}

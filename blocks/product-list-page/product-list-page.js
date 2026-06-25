@@ -162,6 +162,27 @@ export default async function decorate(block) {
             },
           });
         },
+        ProductName: (ctx) => {
+          const { product } = ctx;
+          const colors = ['red', 'blue', 'green', 'purple', 'orange'];
+          const badgeRules = (product.attributes?.find((a) => a.name === 'badge_rules')?.value ?? '')
+            .split(',').map((v) => v.trim()).filter(Boolean);
+
+          const wrapper = document.createElement('div');
+          if (badgeRules.length) {
+            const strip = document.createElement('div');
+            strip.className = 'badge-strip';
+            strip.innerHTML = badgeRules
+              .map((label, i) => `<span class="badge badge--${colors[i % colors.length]}">${label}</span>`)
+              .join('');
+            wrapper.appendChild(strip);
+          }
+          const nameLink = document.createElement('a');
+          nameLink.href = getProductLink(product.urlKey, product.sku);
+          nameLink.textContent = product.name;
+          wrapper.appendChild(nameLink);
+          ctx.replaceWith(wrapper);
+        },
         ProductActions: (ctx) => {
           const actionsWrapper = document.createElement('div');
           actionsWrapper.className = 'product-discovery-product-actions';
