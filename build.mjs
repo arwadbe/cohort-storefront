@@ -15,7 +15,11 @@ overrideGQLOperations([
     npm: '@dropins/storefront-pdp',
     operations: [
       `fragment PRODUCT_FRAGMENT on ProductView {
-        metaTitle
+        metaTitle,
+        custom_attributes {
+          badge_rule
+          value
+        }
       }`
     ],
   },
